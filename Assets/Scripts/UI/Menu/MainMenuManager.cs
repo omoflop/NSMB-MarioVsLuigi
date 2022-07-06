@@ -51,6 +51,7 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
     public Selectable[] roomSettings;
     
     private List<MapDefinition> maps = new();
+    private int debugMapCount = 0;
     private GameObject mapPreview;
     
     private bool pingsReceived;
@@ -340,6 +341,8 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
         List<MapDefinition> normalMaps = new List<MapDefinition>();
         List<MapDefinition> customMaps = new List<MapDefinition>();
         List<MapDefinition> debugMaps = new List<MapDefinition>();
+
+        debugMapCount = 0;
         
         foreach (MapDefinition curMap in tempMaps) {
             string name = curMap.GetDisplayName();
@@ -355,6 +358,7 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
                 case MapType.Debug:
                     debugMapNames.Add(name);
                     debugMaps.Add(curMap);
+                    debugMapCount++;
                     break;
             }
         }
@@ -383,7 +387,7 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
 
         //Load maps from scriptable objects in Resources/Scriptables/Maps
         ReloadMaps();
-        ChangeLevel(0);
+        ChangeLevel(Random.Range(0, maps.Count - debugMapCount));
 
         //Clear game-specific settings so they don't carry over
         HorizontalCamera.OFFSET_TARGET = 0;
