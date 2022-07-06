@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -13,6 +14,8 @@ using TMPro;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEditor;
+using Random = UnityEngine.Random;
 
 public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks, IOnEventCallback, IConnectionCallbacks, IMatchmakingCallbacks {
     public static MainMenuManager Instance;
@@ -21,7 +24,7 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
     bool quit, validName;
     public GameObject connecting;
     public GameObject title, bg, mainMenu, optionsMenu, lobbyMenu, createLobbyPrompt, inLobbyMenu, creditsMenu, controlsMenu, privatePrompt;
-    public GameObject[] levelCameraPositions;
+    //public GameObject[] levelCameraPositions;
     public GameObject sliderText, lobbyText, currentMaxPlayers, settingsPanel;
     public TMP_Dropdown levelDropdown, characterDropdown;
     public RoomIcon selectedRoomIcon, privateJoinRoom;
@@ -46,9 +49,10 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
     public ScrollRect settingsScroll;
 
     public Selectable[] roomSettings;
-
-    public List<string> maps, debugMaps;
-
+    
+    private List<MapDefinition> maps = new();
+    private GameObject mapPreview;
+    
     private bool pingsReceived;
     private List<string> formattedRegions;
     private Region[] pingSortedRegions;
@@ -189,13 +193,9 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
     public void ChangeDebugState(bool enabled) {
         int index = levelDropdown.value;
         levelDropdown.SetValueWithoutNotify(0);
-        levelDropdown.ClearOptions();
-        levelDropdown.AddOptions(maps);
         levelDropdown.SetValueWithoutNotify(Mathf.Clamp(index, 0, maps.Count - 1));
 
-        if (enabled) {
-            levelDropdown.AddOptions(debugMaps);
-        }
+        ReloadMaps(enabled);
         UpdateSettingEnableStates();
     }
 
@@ -279,7 +279,7 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
             Utils.GetCustomProperty(Enums.NetRoomProperties.Level, out int level);
             PhotonNetwork.IsMessageQueueRunning = false;
             SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
-            SceneManager.LoadSceneAsync(level + 2, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(AssetDatabase.GetAssetPath(maps[level].levelScene), LoadSceneMode.Additive);
             break;
         }
         case (byte) Enums.NetEventIds.ChatMessage: {
@@ -330,6 +330,47 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
         PhotonNetwork.RemoveCallbackTarget(this);
     }
 
+    private void ReloadMaps(bool debug = false) {
+        levelDropdown.ClearOptions();
+
+        MapDefinition[] tempMaps = Resources.LoadAll<MapDefinition>("Scriptables/Maps");
+        List<string> normalMapNames = new List<string>();
+        List<string> customMapNames = new List<string>();
+        List<string> debugMapNames = new List<string>();
+        List<MapDefinition> normalMaps = new List<MapDefinition>();
+        List<MapDefinition> customMaps = new List<MapDefinition>();
+        List<MapDefinition> debugMaps = new List<MapDefinition>();
+        
+        foreach (MapDefinition curMap in tempMaps) {
+            string name = curMap.GetDisplayName();
+            switch (curMap.mapType) {
+                case MapType.Normal:
+                    normalMapNames.Add(name);
+                    normalMaps.Add(curMap);
+                    break;
+                case MapType.Custom:
+                    customMapNames.Add(name);
+                    customMaps.Add(curMap);
+                    break;
+                case MapType.Debug:
+                    debugMapNames.Add(name);
+                    debugMaps.Add(curMap);
+                    break;
+            }
+        }
+        levelDropdown.AddOptions(normalMapNames);
+        levelDropdown.AddOptions(customMapNames);
+        if (debug) {
+            levelDropdown.AddOptions(debugMapNames);
+        }
+
+        maps.Clear();
+        maps.AddRange(normalMaps);
+        maps.AddRange(customMaps);
+        maps.AddRange(debugMaps);
+
+    }
+    
     // Unity Stuff
     public void Start() {
 
@@ -339,6 +380,10 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
          */
 
         Instance = this;
+
+        //Load maps from scriptable objects in Resources/Scriptables/Maps
+        ReloadMaps();
+        ChangeLevel(0);
 
         //Clear game-specific settings so they don't carry over
         HorizontalCamera.OFFSET_TARGET = 0;
@@ -354,8 +399,7 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
             GlobalController.Instance.disconnectCause = null;
         }
 
-        Camera.main.transform.position = levelCameraPositions[Random.Range(0, maps.Count)].transform.position;
-        levelDropdown.AddOptions(maps);
+        //Camera.main.transform.position = levelCameraPositions[Random.Range(0, maps.Count)].transform.position;
         LoadSettings(!PhotonNetwork.InRoom);
 
         //Photon stuff.
@@ -710,7 +754,14 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
     }
     public void ChangeLevel(int index) {
         levelDropdown.SetValueWithoutNotify(index);
-        Camera.main.transform.position = levelCameraPositions[index].transform.position;
+        //Camera.main.transform.position = levelCameraPositions[index].transform.position;
+        if (mapPreview)
+            Destroy(mapPreview);
+
+        GameObject preview = maps[index].mapPreview;
+        if (preview != null) {
+            mapPreview = Instantiate(preview);
+        }
     }
     public void SetLevelIndex() {
         if (!PhotonNetwork.IsMasterClient)
