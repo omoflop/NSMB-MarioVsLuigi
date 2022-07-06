@@ -1,34 +1,33 @@
 using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Level Definition")]
+[CreateAssetMenu(menuName = "ScriptableObjects/Map Definition")]
 public class MapDefinition : ScriptableObject {
-    private string _scenePath;
+    [SerializeField] private int _sceneId = -1;
     [SerializeField] private string displayName;
     public MapType mapType;
     public GameObject mapPreview;
 
     // Used internally so users don't have to worry about finding the scene's path
-    #if UNITY_EDITOR
+    #if UNITY_EDITOR_WIN
         [SerializeField] private SceneAsset scene;
         
         private void OnValidate() {
-            _scenePath = AssetDatabase.GetAssetPath(scene);
+            _sceneId = SceneUtility.GetBuildIndexByScenePath(AssetDatabase.GetAssetPath(scene));
         }
     #endif
-    
-    
-
-    public string GetScenePath() {
-        return _scenePath;
-    }
     
     public string GetDisplayName() {
         string str = displayName;
         if (mapType == MapType.Custom) str = $"[C] {str}";
         if (mapType == MapType.Debug) str = $"[WIP] {str}";
         return str;
+    }
+
+    public int GetSceneIndex() {
+        return _sceneId;
     }
 }
 

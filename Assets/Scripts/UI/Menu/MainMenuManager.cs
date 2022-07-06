@@ -280,7 +280,7 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
             Utils.GetCustomProperty(Enums.NetRoomProperties.Level, out int level);
             PhotonNetwork.IsMessageQueueRunning = false;
             SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
-            SceneManager.LoadSceneAsync(maps[level].GetScenePath(), LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(maps[level].GetSceneIndex(), LoadSceneMode.Additive);
             break;
         }
         case (byte) Enums.NetEventIds.ChatMessage: {
@@ -345,7 +345,13 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
         debugMapCount = 0;
         
         foreach (MapDefinition curMap in tempMaps) {
+
             string name = curMap.GetDisplayName();
+            if (curMap.GetSceneIndex() == -1) {
+                Debug.LogError($"Map \"{name}\" scene is not setup! Skipping.");
+                continue;
+            }
+            
             switch (curMap.mapType) {
                 case MapType.Normal:
                     normalMapNames.Add(name);

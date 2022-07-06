@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a8dff0b85d66eb4bbbdfa5bba435631, type: 3}
   m_Name: Sky
   m_EditorClassIdentifier: 
-  levelScene: {fileID: 102900000, guid: addb28d9cb6d8a6498a3b328a6e57f33, type: 3}
   displayName: Sky
   mapType: 1
   mapPreview: {fileID: 5399012810457041965, guid: 4bddfd74a6867f347ae053d7fbf2087b,
     type: 3}
+  scene: {fileID: 102900000, guid: addb28d9cb6d8a6498a3b328a6e57f33, type: 3}
