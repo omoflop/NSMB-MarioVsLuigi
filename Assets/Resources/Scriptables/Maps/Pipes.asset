@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a8dff0b85d66eb4bbbdfa5bba435631, type: 3}
   m_Name: Pipes
   m_EditorClassIdentifier: 
-  levelScene: {fileID: 102900000, guid: 3f5866ca86038b44384372ab3dadfffc, type: 3}
   displayName: Pipes
   mapType: 0
   mapPreview: {fileID: 659757145601053947, guid: 9e65cc999f52090419cf99e99f3668f1,
     type: 3}
+  scene: {fileID: 102900000, guid: 3f5866ca86038b44384372ab3dadfffc, type: 3}

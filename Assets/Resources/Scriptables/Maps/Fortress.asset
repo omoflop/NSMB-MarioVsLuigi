@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a8dff0b85d66eb4bbbdfa5bba435631, type: 3}
   m_Name: Fortress
   m_EditorClassIdentifier: 
-  levelScene: {fileID: 102900000, guid: 2c88ad1eb18532241acee4483fed211d, type: 3}
   displayName: Fortress
   mapType: 0
   mapPreview: {fileID: 7687987119759130968, guid: e485891b3e37d534397c6bd12a09cf23,
     type: 3}
+  scene: {fileID: 102900000, guid: 2c88ad1eb18532241acee4483fed211d, type: 3}

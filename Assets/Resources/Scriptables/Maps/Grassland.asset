@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a8dff0b85d66eb4bbbdfa5bba435631, type: 3}
   m_Name: Grassland
   m_EditorClassIdentifier: 
-  levelScene: {fileID: 102900000, guid: 2cda990e2423bbf4892e6590ba056729, type: 3}
   displayName: Grassland
   mapType: 0
   mapPreview: {fileID: 1871065917589835012, guid: 210fc8d720b08114097b75946aca5665,
     type: 3}
+  scene: {fileID: 102900000, guid: 2cda990e2423bbf4892e6590ba056729, type: 3}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a8dff0b85d66eb4bbbdfa5bba435631, type: 3}
   m_Name: Desert
   m_EditorClassIdentifier: 
-  levelScene: {fileID: 102900000, guid: 0a445e83695e8424e9e56da3e5b773e4, type: 3}
   displayName: Desert
   mapType: 2
   mapPreview: {fileID: 5407041671160397808, guid: e37062be8514551409bb938b8e162ddb,
     type: 3}
+  scene: {fileID: 102900000, guid: 0a445e83695e8424e9e56da3e5b773e4, type: 3}

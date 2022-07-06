@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a8dff0b85d66eb4bbbdfa5bba435631, type: 3}
   m_Name: Bricks
   m_EditorClassIdentifier: 
-  levelScene: {fileID: 102900000, guid: eccd61e23b609ef4f97a643aa84d51d5, type: 3}
   displayName: Bricks
   mapType: 0
   mapPreview: {fileID: 372833894899529366, guid: 35b950f2b2883684092f8e222db4db14,
     type: 3}
+  scene: {fileID: 102900000, guid: eccd61e23b609ef4f97a643aa84d51d5, type: 3}

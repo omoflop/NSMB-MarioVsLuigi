@@ -280,7 +280,7 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
             Utils.GetCustomProperty(Enums.NetRoomProperties.Level, out int level);
             PhotonNetwork.IsMessageQueueRunning = false;
             SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
-            SceneManager.LoadSceneAsync(AssetDatabase.GetAssetPath(maps[level].levelScene), LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(maps[level].GetScenePath(), LoadSceneMode.Additive);
             break;
         }
         case (byte) Enums.NetEventIds.ChatMessage: {

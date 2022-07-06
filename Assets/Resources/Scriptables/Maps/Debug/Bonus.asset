@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a8dff0b85d66eb4bbbdfa5bba435631, type: 3}
   m_Name: Bonus
   m_EditorClassIdentifier: 
-  levelScene: {fileID: 102900000, guid: ce4cf98f31007b44ea19a2fb2ab0924a, type: 3}
   displayName: Bonus
   mapType: 2
   mapPreview: {fileID: 7765028198886996508, guid: ed5189eefff73cd49a50e0acf4bd1149,
     type: 3}
+  scene: {fileID: 102900000, guid: ce4cf98f31007b44ea19a2fb2ab0924a, type: 3}
