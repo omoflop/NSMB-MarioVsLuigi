@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a8dff0b85d66eb4bbbdfa5bba435631, type: 3}
-  m_Name: Volcano
+  m_Name: Ghost
   m_EditorClassIdentifier: 
-  _sceneId: 9
-  displayName: Volcano
+  _sceneId: 12
+  displayName: Ghost
   mapType: 1
-  mapPreview: {fileID: 8195894231306430784, guid: 9ce22f02f708db44d9b324895dd42555,
+  mapPreview: {fileID: 8195894231306430784, guid: e03ec3d7f77446641a6e6a0a3f14bce9,
     type: 3}
-  scene: {fileID: 102900000, guid: 48dfbffbd41b62a41a8135ce450497f5, type: 3}
+  scene: {fileID: 102900000, guid: a3a7087af7b58db44a27a2ffb981a44e, type: 3}

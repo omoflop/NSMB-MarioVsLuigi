@@ -7,7 +7,7 @@ AnimationClip:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: bulletbill
-  serializedVersion: 6
+  serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
   m_UseHighQualityCurve: 1
@@ -157,6 +157,7 @@ AnimationClip:
       typeID: 212
       customType: 23
       isPPtrCurve: 1
+      isIntCurve: 0
     pptrCurveMapping:
     - {fileID: 2801264589581574561, guid: 6a8295a206a133847aa7c4b37eaa0337, type: 3}
     - {fileID: -2818031222768422380, guid: 6a8295a206a133847aa7c4b37eaa0337, type: 3}

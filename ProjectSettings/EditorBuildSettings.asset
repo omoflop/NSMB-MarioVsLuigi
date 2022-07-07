@@ -41,4 +41,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/CustomDesert.unity
     guid: 0a445e83695e8424e9e56da3e5b773e4
+  - enabled: 1
+    path: Assets/Scenes/Levels/GhostHouse.unity
+    guid: a3a7087af7b58db44a27a2ffb981a44e
   m_configObjects: {}
